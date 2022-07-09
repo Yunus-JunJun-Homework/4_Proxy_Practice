@@ -61,3 +61,32 @@ arrObjNoProto.push([0, 1, 2]);
 
 console.log(arrObjNoProto[1]); //{}
 console.log(arrObjNoProto); // Array length 5
+
+// PRACTICE PROXY
+
+const user = {
+  firstName: 'Yunus',
+  lastName: 'Seytnazarov',
+};
+
+const getFullName = function (user) {
+  return `${user.firstName} ${user.lastName}`;
+};
+
+const getFullNameProxy = new Proxy(getFullName, {
+  apply(target, thisArg, args) {
+    return target(...args).toUpperCase();
+  },
+});
+
+console.log(getFullNameProxy(user));
+
+const proxy = new Proxy(user, {
+  get: function (target, property) {
+    if (property === 'toJSON') {
+      return () => target;
+    }
+  },
+});
+
+console.log(proxy);
