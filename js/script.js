@@ -26,7 +26,7 @@ arrObjNoProto = new Proxy(arrObjNoProto, {
       };
     }
 
-    if (!typeof value === 'string') {
+    if (typeof value !== 'string') {
       value = JSON.stringify(value);
     }
 
@@ -90,3 +90,15 @@ const proxy = new Proxy(user, {
 });
 
 console.log(proxy);
+
+const parent = {
+  name: 'Yunus',
+  getName() {
+    return `${this.name} me`;
+  },
+};
+
+console.log(parent.getName());
+
+const child = Object.create(parent);
+console.log(child.getName());
